@@ -1,0 +1,61 @@
+@startuml
+
+!define MASTER F9DFD5
+!define TRANSACTION CAE7F2
+
+entity contractors as "contractors\n契約者" <<M,MASTER>> {
+  + id INT(10) [PK]
+  --
+  name VARCHAR(30) [名前]
+  birth_day DATE [生年月日]
+  prefectures VARCHAR(30) [都道府県]
+  city VARCHAR(30) [市町村区]
+  street_bunch VARCHAR(30) [町名番地]
+  created_at TIMESTAMP
+  updated_at TIMESTAMP
+}
+
+
+entity contract_lines as "contract_lines\n契約回線" <<M,MASTER>> {
+  + id INT(10) [PK]
+  --
+  ime_number INT [IMEI番号]
+  model_body_price INT [本体価格]
+  # contractor_id [FK]
+  contract_status CHAR(1) [契約ステータス (契約中:1,契約終了:0)]
+  created_at TIMESTAMP
+  updated_at TIMESTAMP
+}
+
+entity monthly_payment_histories as "monthly_payment_histories\n毎月の支払い履歴" <<T,TRANSACTION>> {
+  + id INT(10) [PK]
+  --
+  # contractor_id [FK]
+  price VARCHAR(50) [金額]
+  unpaid CHAR(1) [未納(未納:1,支払い完了:0)]
+  year INT [年度]
+  month INT [支払い月]
+  created_at TIMESTAMP
+  updated_at TIMESTAMP
+}
+
+entity monthly_how_to_payments as "monthly_how_to_payments\n毎月の支払い方法" <<T,TRANSACTION>> {
+  + id INT(10) [PK]
+  --
+  # contract_line_id [FK 契約回線]
+  # pyament_type_code_id [FK 支払い方法種別]
+  created_at TIMESTAMP
+  updated_at TIMESTAMP
+}
+
+entity codes as "codes\nコード値" <<M,MASTER>> {
+  + id INT(10) [PK]
+  --
+  code_key VARCHAR(30) [コードkey]
+  created_at TIMESTAMP
+  updated_at TIMESTAMP
+}
+
+
+
+@enduml

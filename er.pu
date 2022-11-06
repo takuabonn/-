@@ -1,9 +1,7 @@
 @startuml erd
+!include tables.pu
 
-    companies ||-d-o{ users
-    companies ||-o{ positions
-    users ||-l-o| user_profiles
-    users ||-d-o{ user_subordinate_users
-    users ||-o{ user_positions
-    positions ||-o{ user_positions
+    contractors ||-d-o{ contract_lines
+    contract_lines ||-o{ monthly_payment_histories
+    contract_lines ||-l-o| monthly_how_to_payments
 @enduml

@@ -7,6 +7,7 @@ entity contractors as "contractors\n契約者" <<M,MASTER>> {
   + id INT(10) [PK]
   --
   name VARCHAR(30) [名前]
+  zip_code VARCHAR(30) [郵便番号]
   birth_day DATE [生年月日]
   prefectures VARCHAR(30) [都道府県]
   city VARCHAR(30) [市町村区]
@@ -30,8 +31,8 @@ entity contract_lines as "contract_lines\n契約回線" <<M,MASTER>> {
 entity monthly_payment_histories as "monthly_payment_histories\n毎月の支払い履歴" <<T,TRANSACTION>> {
   + id INT(10) [PK]
   --
-  # contractor_id [FK]
-  price VARCHAR(50) [金額]
+  # contractor_line_id [FK]
+  paid_amount INT [金額]
   unpaid CHAR(1) [未納(未納:1,支払い完了:0)]
   year INT [年度]
   month INT [支払い月]
@@ -43,15 +44,8 @@ entity monthly_how_to_payments as "monthly_how_to_payments\n毎月の支払い�
   + id INT(10) [PK]
   --
   # contract_line_id [FK 契約回線]
-  # pyament_type_code_id [FK 支払い方法種別]
-  created_at TIMESTAMP
-  updated_at TIMESTAMP
-}
-
-entity codes as "codes\nコード値" <<M,MASTER>> {
-  + id INT(10) [PK]
-  --
-  code_key VARCHAR(30) [コードkey]
+  pyament_type [支払い方法種別]
+  billing_deadline_type [請求締め日種別]
   created_at TIMESTAMP
   updated_at TIMESTAMP
 }

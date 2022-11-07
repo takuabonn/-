@@ -2,6 +2,6 @@
 !include tables.pu
 
     contractors ||-d-o{ contract_lines
-    contract_lines ||-o{ monthly_payment_histories
-    contract_lines ||-l-o| monthly_how_to_payments
+    contract_lines ||-d-o{ contract_devices
+    contract_devices ||-o{ monthly_payment_histories
 @enduml

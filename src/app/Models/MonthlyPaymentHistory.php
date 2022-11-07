@@ -11,8 +11,8 @@ class MonthlyPaymentHistory extends Model
     use HasFactory;
     use SoftDeletes;
 
-    public function contractLine()
+    public function contractDevice()
     {
-        return $this->belongsTo(ContractLine::class, 'contract_line_id');
+        return $this->belongsTo(ContractDevice::class, 'contract_device_id');
     }
 }

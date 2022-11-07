@@ -20,9 +20,22 @@ entity contractors as "contractors\n契約者" <<M,MASTER>> {
 entity contract_lines as "contract_lines\n契約回線" <<M,MASTER>> {
   + id INT(10) [PK]
   --
+  phone_number VARCHAR(30) [電話番号]
+  # contractor_id [FK]
+  contract_status CHAR(1) [契約ステータス (契約中:1,契約終了:0)]
+  created_at TIMESTAMP
+  updated_at TIMESTAMP
+}
+
+entity contract_devices as "contract_devices\n契約端末" <<M,MASTER>> {
+  + id INT(10) [PK]
+  --
+  device_name VARCHAR(30) [端末名]
+  # contract_line_id INT [FK 契約回線ID]
   ime_number INT [IMEI番号]
   model_body_price INT [本体価格]
-  # contractor_id [FK]
+  pyament_type [支払い方法種別]
+  billing_deadline_type [請求締め日種別]
   contract_status CHAR(1) [契約ステータス (契約中:1,契約終了:0)]
   created_at TIMESTAMP
   updated_at TIMESTAMP
@@ -31,7 +44,7 @@ entity contract_lines as "contract_lines\n契約回線" <<M,MASTER>> {
 entity monthly_payment_histories as "monthly_payment_histories\n毎月の支払い履歴" <<T,TRANSACTION>> {
   + id INT(10) [PK]
   --
-  # contractor_line_id [FK]
+  # contractor_device_id [FK 契約端末]
   paid_amount INT [金額]
   unpaid CHAR(1) [未納(未納:1,支払い完了:0)]
   year INT [年度]
@@ -39,17 +52,5 @@ entity monthly_payment_histories as "monthly_payment_histories\n毎月の支払�
   created_at TIMESTAMP
   updated_at TIMESTAMP
 }
-
-entity monthly_how_to_payments as "monthly_how_to_payments\n毎月の支払い方法" <<T,TRANSACTION>> {
-  + id INT(10) [PK]
-  --
-  # contract_line_id [FK 契約回線]
-  pyament_type [支払い方法種別]
-  billing_deadline_type [請求締め日種別]
-  created_at TIMESTAMP
-  updated_at TIMESTAMP
-}
-
-
 
 @enduml

@@ -15,9 +15,4 @@ class ContractDevice extends Model
     {
         return $this->belongsTo(ContractLine::class, 'contract_line_id');
     }
-
-    public function monthlyPaymentHistories()
-    {
-        return $this->hasMany(MonthlyPaymentHistory::class, 'contract_line_id');
-    }
 }

@@ -3,5 +3,6 @@
 
     contractors ||-d-o{ contract_lines
     contract_lines ||-d-o{ contract_devices
-    contract_devices ||-o{ monthly_payment_histories
+    contract_lines ||-o{ monthly_payment_histories
+    base_contract_contents ||-contract_lines
 @enduml

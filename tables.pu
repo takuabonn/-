@@ -22,6 +22,9 @@ entity contract_lines as "contract_lines\n契約回線" <<M,MASTER>> {
   --
   phone_number VARCHAR(30) [電話番号]
   # contractor_id [FK]
+  # contract_detail_id [FK 基本契約内容ID]
+   pyament_type [支払い方法種別]
+  billing_deadline_type [請求締め日種別]
   contract_status CHAR(1) [契約ステータス (契約中:1,契約終了:0)]
   created_at TIMESTAMP
   updated_at TIMESTAMP
@@ -32,11 +35,9 @@ entity contract_devices as "contract_devices\n契約端末" <<M,MASTER>> {
   --
   device_name VARCHAR(30) [端末名]
   # contract_line_id INT [FK 契約回線ID]
+  device_type VARCHAR(30) [端末種別]
   ime_number INT [IMEI番号]
   model_body_price INT [本体価格]
-  pyament_type [支払い方法種別]
-  billing_deadline_type [請求締め日種別]
-  contract_status CHAR(1) [契約ステータス (契約中:1,契約終了:0)]
   created_at TIMESTAMP
   updated_at TIMESTAMP
 }
@@ -44,11 +45,22 @@ entity contract_devices as "contract_devices\n契約端末" <<M,MASTER>> {
 entity monthly_payment_histories as "monthly_payment_histories\n毎月の支払い履歴" <<T,TRANSACTION>> {
   + id INT(10) [PK]
   --
-  # contractor_device_id [FK 契約端末]
+  # contractor_line_id [FK 契約回線]
   paid_amount INT [金額]
   unpaid CHAR(1) [未納(未納:1,支払い完了:0)]
   year INT [年度]
   month INT [支払い月]
+  created_at TIMESTAMP
+  updated_at TIMESTAMP
+}
+
+entity contract_details as "contract_details\n基本契約内容" <<T,TRANSACTION>> {
+  + id INT(10) [PK]
+  --
+  plane_type VARCHAR(30) [(メリハリ:1,ミニフィット:0)]
+  famiry_discount_condition [家族割plus]
+  wifi_discount_condition [光割引]
+  call_option [通話オプション]
   created_at TIMESTAMP
   updated_at TIMESTAMP
 }

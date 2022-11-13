@@ -16,7 +16,6 @@ entity contractors as "contractors\n契約者" <<M,MASTER>> {
   updated_at TIMESTAMP
 }
 
-
 entity contract_lines as "contract_lines\n契約回線" <<M,MASTER>> {
   + id INT(10) [PK]
   --
@@ -61,6 +60,14 @@ entity contract_details as "contract_details\n基本契約内容" <<T,TRANSACTIO
   famiry_discount_condition [家族割plus]
   wifi_discount_condition [光割引]
   call_option [通話オプション]
+  created_at TIMESTAMP
+  updated_at TIMESTAMP
+}
+
+entity family_groups as "family_groups\n家族グループ" <<T,TRANSACTION>> {
+  + id INT(10) [PK]
+  --
+  # contract_id INT [FK 代表契約者ID]
   created_at TIMESTAMP
   updated_at TIMESTAMP
 }

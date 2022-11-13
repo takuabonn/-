@@ -6,9 +6,13 @@ use App\domains\RatePlane;
 
 class SharpnessPlane implements RatePlane
 {
+    private $usabletrafic = [
+        '30gb' => 7238
+    ];
+
     public function priceEachUsableTraffic()
     {
-        return ['30gb' => 7238];
+        return $this->usabletrafic;
         
     }
 
@@ -16,5 +20,4 @@ class SharpnessPlane implements RatePlane
     {
        
     }
-
 }

@@ -9,7 +9,4 @@ interface RatePlane
 
     // 割引額算出
     public function caluculationDiscountAmount();
-
-
-    
 }

@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 
 class FeeCalculationTest extends TestCase
 {
-   
     public function test_monthlyModelPrice()
     {
         $feeCalculation = new FeeCaluculation(
@@ -40,7 +39,7 @@ class FeeCalculationTest extends TestCase
         );
         $ratePlanePrice = $feeCalculation->ratePlanePrice();
         $expects = ['30gb' => 7238];
-        $this->assertSame($ratePlanePrice, $expects);
+        $this->assertSame($expects, $ratePlanePrice);
 
     }
 
@@ -57,6 +56,19 @@ class FeeCalculationTest extends TestCase
             '2gb' => 4378,
             '1gb' => 3278,
         ];
-        $this->assertSame($ratePlanePrice, $expects);
+        $this->assertSame($expects,$ratePlanePrice);
     }
+
+    // // 料金プラン価格 割引あり(光割)
+    // public function test_ratePlanePriceOnWifiDiscountedMerihari()
+    // {
+    //     // メリハリプラン
+    //     $feeCalculation = new FeeCaluculation(
+    //         new SharpnessPlane()
+    //     );
+    //     $ratePlanePrice = $feeCalculation->ratePlanePrice();
+    //     $expects = ['30gb' => 6238];
+    //     $this->assertSame($expects, $ratePlanePrice);
+
+    // }
 }

@@ -24,7 +24,6 @@ class FeeCaluculation
             return 0;
         }
         return floor($model_price/$number_of_divisions);
-        
     }
 
     /**
@@ -38,6 +37,6 @@ class FeeCaluculation
     public function ratePlanePrice()
     {
         return $this->ratePlane->priceEachUsableTraffic();
+        
     }
-
 }

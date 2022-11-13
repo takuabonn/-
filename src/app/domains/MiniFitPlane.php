@@ -18,6 +18,7 @@ class MiniFitPlane implements RatePlane
 
     public function caluculationDiscountAmount()
     {
+        
        
     }
 

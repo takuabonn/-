@@ -3,22 +3,20 @@
 namespace App\domains;
 
 use App\domains\repositories\IFContractorRepository;
+use App\queryServices\ContractLineQueryService;
 
 class WifiDiscountApplicable
 {
-    private $repository;
-    public function __construct(IFContractorRepository $contractorRepository)
+    private  $contractLineQueryService;
+    public function __construct(ContractLineQueryService $contractLineQueryService)
     {
-        $this->repository = $contractorRepository;
-        
+        $this->contractLineQueryService = $contractLineQueryService;
     }
     /**
      *  適用条件: 光も契約している
      */
-    public function applicable(int $contractor_id)
+    public function applicable($phone_number)
     {
-        $contractor = $this->repository->findByContractorId($contractor_id);
-
-        return true;
+        return $this->contractLineQueryService->existsWifiContractInFamilyGroup($phone_number);
     }
 }

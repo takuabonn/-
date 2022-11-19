@@ -2,31 +2,27 @@
 namespace App\domains;
 
 use App\domains\repositories\IFContractorRepository;
+use App\queryServices\ContractLineQueryService;
 use Illuminate\Support\Facades\Log;
 
 class FamilyDiscountApplicable
 {
-    private $repository;
-    public function __construct(IFContractorRepository $contractorRepository)
+    private  $contractLineQueryService;
+    public function __construct(ContractLineQueryService $contractLineQueryService)
     {
-        $this->repository = $contractorRepository;
+        $this->contractLineQueryService = $contractLineQueryService;
         
     }
 
     /**
      *  適用条件: 家族で回線が3回線以上
      */
-    public function applicable($contractor_id)
+    public function applicable($phone_number)
     {
-        $contractor = $this->repository->findByContractorId($contractor_id);
-      
-        if($contractor['family_group_id'] !== null) {
-            $family = $this->repository->getByFamilyGroupId($contractor['family_group_id']);
-            if(count($family) >= 3) {
-                return true;
-            }
+        $contractLineOnFamily = $this->contractLineQueryService->familyContractLines($phone_number);
+        if(count($contractLineOnFamily) >= 3) {
+            return true;
         }
-
         return false;
     }
 }

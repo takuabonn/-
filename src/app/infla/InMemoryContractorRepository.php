@@ -1,6 +1,7 @@
 <?php
 
 namespace App\infla;
+
 use App\domains\repositories\IFContractorRepository;
 use Illuminate\Support\Facades\Log;
 
@@ -48,40 +49,46 @@ class InMemoryContractorRepository implements IFContractorRepository
             'city' => '北港区',
             'street_bunch' => '5-5',
         ],
+        [
+            'id' => 5,
+            'family_group_id' => null,
+            'name' => '拓',
+            'zip_code' => '0750094',
+            'birth_day' => '1998/03/22',
+            'prefectures' => '東京都',
+            'city' => '北港区',
+            'street_bunch' => '5-5',
+        ],
 
     ];
+
     public function findByContractorId($contractor_id)
     {
-       $keyIndex = array_search($contractor_id, array_column($this->contractorLists, 'id'));
-       return $this->contractorLists[$keyIndex];
-       
+        $keyIndex = array_search($contractor_id, array_column($this->contractorLists, 'id'));
+        return $this->contractorLists[$keyIndex];
     }
 
     public function getByColumn($column)
     {
-
     }
 
     public function all()
     {
-
     }
 
     public function update($contractor)
     {
-
     }
 
     public function create($contractor)
     {
-
-
     }
 
-    public function getByFamilyGroupId(int $family_group_id)
+    public function getByFamilyGroupId($family_group_id)
     {
-        return array_values(array_filter($this->contractorLists, function ($contractor) use($family_group_id) {
+        $contractorLists = array_filter($this->contractorLists, function ($contractor) use ($family_group_id) {
             return $contractor['family_group_id'] === $family_group_id;
-        }));
+        });
+        return array_values($contractorLists);
     }
 }

@@ -1,5 +1,7 @@
 <?php
+
 namespace App\infla;
+
 use App\domains\repositories\IFContractorRepository;
 
 class ContractorRepository implements IFContractorRepository
@@ -50,36 +52,27 @@ class ContractorRepository implements IFContractorRepository
     ];
     public function findByContractorId($contractor_id)
     {
-        return array_filter($this->contractorLists, function ($contractor) use($contractor_id) {
+        return array_filter($this->contractorLists, function ($contractor) use ($contractor_id) {
             return $contractor['id'] === $contractor_id;
         })[0];
     }
 
     public function getByColumn($column)
     {
-
     }
 
     public function all()
     {
-
     }
 
     public function update($contractor)
     {
-
     }
 
     public function create($contractor)
     {
-
-
     }
-
-    public function getByFamilyGroupId(int $family_group_id)
+    public function getByFamilyGroupId($family_group_id)
     {
-        return array_filter($this->contractorLists, function ($contractor) use($family_group_id) {
-            return $contractor['family_group_id'] === $family_group_id;
-        });
     }
 }

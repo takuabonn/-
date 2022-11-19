@@ -15,6 +15,4 @@ interface IFContractorRepository
     public function update($contractor);
 
     public function getByFamilyGroupId(int $family_group_id);
-
 }
-

@@ -39,7 +39,7 @@ class WifiDiscountApplicableTest extends TestCase
      *
      * @return void
      */
-    public function test_applicableOnDoesnotHaveWifiWithGroup()
+    public function test_applicableOnHaveWifiWithGroup()
     {
         $queryService = resolve(ContractLineQueryService::class);
         $wifiDiscountApplicable = new WifiDiscountApplicable($queryService);

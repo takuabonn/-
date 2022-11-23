@@ -2,13 +2,16 @@
 
 namespace App\Providers;
 
+use App\domains\repositories\IFContractDetailRepository;
 use App\domains\repositories\IFContractDeviceRepository;
 use App\domains\repositories\IFContractLineRepository;
 use App\domains\repositories\IFContractorRepository;
 use App\domains\WifiDiscountApplicable;
+use App\infla\ContractDetailRepository;
 use App\infla\ContractDeviceRepository;
 use App\infla\ContractLineRepository;
 use App\infla\ContractorRepository;
+use App\infla\InMemoryContractDetailRepository;
 use App\infla\InMemoryContractDeviceRepository;
 use App\infla\InMemoryContractLineRepository;
 use App\infla\InMemoryContractorRepository;
@@ -36,9 +39,19 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
+            InMemoryContractDetailRepository::class,
+            ContractDetailRepository::class,
+        );
+
+        $this->app->bind(
             ContractLineQueryService::class,
             function ($app) {
-                return new ContractLineQueryService($app->make(IFContractorRepository::class), $app->make(IFContractLineRepository::class), $app->make(IFContractDeviceRepository::class));
+                return new ContractLineQueryService(
+                    $app->make(IFContractorRepository::class),
+                    $app->make(IFContractLineRepository::class),
+                    $app->make(IFContractDeviceRepository::class),
+                    $app->make(IFContractDetailRepository::class)
+                );
             }
         );
 
@@ -64,6 +77,14 @@ class AppServiceProvider extends ServiceProvider
                 return new InMemoryContractDeviceRepository();
             }
             return new ContractDeviceRepository();
+        });
+
+        // 契約内容リポジトリ
+        $this->app->bind(IFContractDetailRepository::class, function ($app) {
+            if (App::environment('testing')) {
+                return new InMemoryContractDetailRepository();
+            }
+            return new ContractDetailRepository();
         });
     }
 

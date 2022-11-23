@@ -2,7 +2,16 @@
 !include tables.pu
 
     contractors ||-d-o{ contract_lines
-    contract_lines ||-d-o{ contract_devices
-    contract_lines ||-o{ monthly_payment_histories
-    base_contract_contents ||-contract_lines
+    contract_details ||-d-contract_lines
+    contractors ||-d-o{ no_contract_devices
+    contract_lines ||-d-contract_devices
+    contract_lines ||-d-o{ monthly_payment_histories
+    contract_lines ||-o{ monthly_billing_histories
+    contract_lines ||-d-o{ call_histories
+    contract_lines ||-d-o{ trafic_histories
+    contract_details ||-l-o{ contract_detail_histories
+   
+    family_groups ||-contract_lines
+
 @enduml
+

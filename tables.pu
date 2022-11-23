@@ -16,15 +16,12 @@ entity contractors as "contractors\n契約者" <<M,MASTER>> {
   updated_at TIMESTAMP
 }
 
-
 entity contract_lines as "contract_lines\n契約回線" <<M,MASTER>> {
   + id INT(10) [PK]
   --
   phone_number VARCHAR(30) [電話番号]
   # contractor_id [FK]
-  # contract_detail_id [FK 基本契約内容ID]
-   pyament_type [支払い方法種別]
-  billing_deadline_type [請求締め日種別]
+  # family_group_id [FK 家族グループ]
   contract_status CHAR(1) [契約ステータス (契約中:1,契約終了:0)]
   created_at TIMESTAMP
   updated_at TIMESTAMP
@@ -38,6 +35,24 @@ entity contract_devices as "contract_devices\n契約端末" <<M,MASTER>> {
   device_type VARCHAR(30) [端末種別]
   ime_number INT [IMEI番号]
   model_body_price INT [本体価格]
+  how_to_buy INT [購入方法(0:一括,1:分割)]
+  division_number INT [分割回数]
+  model_price_balance INT [残額]
+  created_at TIMESTAMP
+  updated_at TIMESTAMP
+}
+
+entity no_contract_devices as "no_contract_devices\n回線未契約端末" <<M,MASTER>> {
+  + id INT(10) [PK]
+  --
+  device_name VARCHAR(30) [端末名]
+  # contractor_id INT [FK 契約者ID]
+  device_type VARCHAR(30) [端末種別]
+  ime_number INT [IMEI番号]
+  model_body_price INT [本体価格]
+  how_to_buy INT [購入方法(0:一括,1:分割)]
+  division_number INT [分割回数]
+  model_price_balance INT [残額]
   created_at TIMESTAMP
   updated_at TIMESTAMP
 }
@@ -46,10 +61,23 @@ entity monthly_payment_histories as "monthly_payment_histories\n毎月の支払�
   + id INT(10) [PK]
   --
   # contractor_line_id [FK 契約回線]
-  paid_amount INT [金額]
+  # monthly_billing_historie_id [FK 請求ID]
   unpaid CHAR(1) [未納(未納:1,支払い完了:0)]
   year INT [年度]
   month INT [支払い月]
+  paid_amount [支払額]
+  created_at TIMESTAMP
+  updated_at TIMESTAMP
+}
+
+entity monthly_billing_histories as "monthly_billing_histories\n毎月の請求履歴" <<T,TRANSACTION>> {
+  + id INT(10) [PK]
+  --
+  # contractor_line_id [FK 契約回線]
+  year INT [年度]
+  month INT [請求月]
+  plan_amount INT [プラン料金]
+  model_division_amount [端末代]
   created_at TIMESTAMP
   updated_at TIMESTAMP
 }
@@ -57,10 +85,60 @@ entity monthly_payment_histories as "monthly_payment_histories\n毎月の支払�
 entity contract_details as "contract_details\n基本契約内容" <<T,TRANSACTION>> {
   + id INT(10) [PK]
   --
+  # contract_line_id [FK 契約回線ID]
+  pyament_type [支払い方法種別]
+  billing_deadline_type [請求締め日種別]
   plane_type VARCHAR(30) [(メリハリ:1,ミニフィット:0)]
   famiry_discount_condition [家族割plus]
   wifi_discount_condition [光割引]
   call_option [通話オプション]
+  operation_start_at [契約開始日]
+  created_at TIMESTAMP
+  updated_at TIMESTAMP
+}
+
+entity contract_detail_histories as "contract_detail_histories\n基本契約内容変更履歴" <<T,TRANSACTION>> {
+  + id INT(10) [PK]
+  --
+  # contract_detail_id [FK 基本契約ID]
+  pyament_type [支払い方法種別]
+  billing_deadline_type [請求締め日種別]
+  plane_type VARCHAR(30) [(メリハリ:1,ミニフィット:0)]
+  famiry_discount_condition [家族割plus]
+  wifi_discount_condition [光割引]
+  call_option [通話オプション]
+  operation_start_at [適用開始日]
+  operation_end_at [適用終了日]
+  created_at TIMESTAMP
+  updated_at TIMESTAMP
+}
+
+entity family_groups as "family_groups\n家族グループ" <<T,TRANSACTION>> {
+  + id INT(10) [PK]
+  --
+  # contract_line_id INT [FK 代表回線ID]
+  created_at TIMESTAMP
+  updated_at TIMESTAMP
+}
+
+entity call_histories as "call_histories\n通話履歴" <<T,TRANSACTION>> {
+  + id INT(10) [PK]
+  --
+  # contract_line_id [FK 契約回線]
+  year INT [年度]
+  month INT [月]
+  call_time [通話時間]
+  created_at TIMESTAMP
+  updated_at TIMESTAMP
+}
+
+entity trafic_histories as "trafic_histories\n通信履歴" <<T,TRANSACTION>> {
+  + id INT(10) [PK]
+  --
+  # contract_line_id [FK 契約回線]
+  year INT [年度]
+  month INT [月]
+  trafic [通信量]
   created_at TIMESTAMP
   updated_at TIMESTAMP
 }

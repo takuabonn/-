@@ -21,7 +21,6 @@ entity contract_lines as "contract_lines\n契約回線" <<M,MASTER>> {
   --
   phone_number VARCHAR(30) [電話番号]
   # contractor_id [FK]
-  # contract_detail_id [FK 基本契約内容ID]
   # family_group_id [FK 家族グループ]
   contract_status CHAR(1) [契約ステータス (契約中:1,契約終了:0)]
   created_at TIMESTAMP
@@ -86,6 +85,7 @@ entity monthly_billing_histories as "monthly_billing_histories\n毎月の請求�
 entity contract_details as "contract_details\n基本契約内容" <<T,TRANSACTION>> {
   + id INT(10) [PK]
   --
+  # contract_line_id [FK 契約回線ID]
   pyament_type [支払い方法種別]
   billing_deadline_type [請求締め日種別]
   plane_type VARCHAR(30) [(メリハリ:1,ミニフィット:0)]

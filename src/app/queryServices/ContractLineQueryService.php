@@ -2,6 +2,7 @@
 
 namespace App\queryServices;
 
+use App\domains\repositories\IFContractDetailRepository;
 use App\domains\repositories\IFContractDeviceRepository;
 use App\domains\repositories\IFContractLineRepository;
 use App\domains\repositories\IFContractorRepository;
@@ -12,16 +13,19 @@ class ContractLineQueryService
     private $contractorRepository;
     private $contractLineRepository;
     private $contractDeviceRepository;
+    private $contractDetailRepository;
 
     public function __construct(
         IFContractorRepository $contractorRepository,
         IFContractLineRepository $contractLineRepository,
-        IFContractDeviceRepository $contractDeviceRepository
+        IFContractDeviceRepository $contractDeviceRepository,
+        IFContractDetailRepository $contractDetailRepository
 
     ) {
         $this->contractorRepository = $contractorRepository;
         $this->contractLineRepository = $contractLineRepository;
         $this->contractDeviceRepository = $contractDeviceRepository;
+        $this->contractDetailRepository = $contractDetailRepository;
     }
 
     /**
@@ -57,5 +61,14 @@ class ContractLineQueryService
         $contractor_ids = array_column($familyList, 'id');
         Log::info($contractor_ids);
         return $this->contractDeviceRepository->existsFamilyDeviceOnDeviceType(1, $contractor_ids);
+    }
+
+    /**
+     * 契約内容の取得
+     */
+    public function contractDetail($phone_number)
+    {
+        $contractLine = $this->contractLineRepository->findByPhoneNumber($phone_number);
+        return $this->contractDetailRepository->findByContractLineId($contractLine['id']);
     }
 }

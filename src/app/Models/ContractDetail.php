@@ -11,8 +11,11 @@ class ContractDetail extends Model
     use HasFactory;
     use SoftDeletes;
 
+    /**
+     * 契約回線
+     */
     public function contractLine()
     {
-        return $this->hasOne(ContractLine::class, 'contract_detail_id');
+        return $this->belongsTo(ContractLine::class, 'contract_detail_id');
     }
 }

@@ -6,16 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ContractDevice extends Model
+class FamilyGroup extends Model
 {
     use HasFactory;
     use SoftDeletes;
 
     /**
-     * 契約回線
+     * 家族グループに所属している回線
      */
-    public function contractLine()
+    public function contractLines()
     {
-        return $this->belongsTo(ContractLine::class, 'contract_line_id');
+        return $this->hasMany(ContractLine::class, 'family_group_id');
     }
 }

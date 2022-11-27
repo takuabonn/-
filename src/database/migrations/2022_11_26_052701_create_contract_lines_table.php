@@ -15,16 +15,13 @@ class CreateContractLinesTable extends Migration
     {
         Schema::create('contract_lines', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique();
+            $table->uuid('uuid')->unique()->nullable(false)->comment('UUID');
+            $table->string('phone_number')->nullable(false)->unique()->comment('電話番号');
             $table->unsignedBigInteger('contractor_id')->nullable(false)->comment('契約者ID');
-            $table->string('contract_status', 0)->default('1')->comment('契約ステータス(契約中:1,契約終了:0)');
-            $table->integer('ime_number',false, true)->unique()->comment('IMEI番号');
-            $table->integer('model_body_price', false, true)->comment('本体価格');
+            $table->unsignedBigInteger('family_group_id')->nullable(true)->comment('家族グループID');
+            $table->integer('contract_status')->nullable(false)->default(1)->comment('契約ステータス(1:契約中,0:契約終了)');
             $table->timestamps();
             $table->softDeletes();
-
-            // 外部キー制約
-            $table->foreign('contractor_id', 'fk_contract_lines_contractors')->references('id')->on('contractors');
         });
     }
 

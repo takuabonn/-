@@ -13,6 +13,21 @@ class CreateContractLinesTable extends Migration
      */
     public function up()
     {
+        Schema::create('contractors', function (Blueprint $table) {
+            $table->id();
+            // entityの識別子
+            $table->uuid('uuid')->nullable(false)->unique();
+            $table->string('name', 255)->nullable(false)->comment('契約者名');
+            $table->date('birth_day')->nullable()->comment('生年月日');
+            $table->string('zip_code', 30)->nullable(false)->comment('郵便番号');
+            $table->string('prefecture', 10)->nullable(false)->comment('都道府県');
+            $table->string('city', '30')->nullable(false)->comment('市町村区');
+            $table->string('street_bunch', '30')->nullable()->commment('町名番地');
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+
         Schema::create('contract_lines', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique()->nullable(false)->comment('UUID');

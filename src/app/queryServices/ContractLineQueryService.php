@@ -59,7 +59,6 @@ class ContractLineQueryService
         // 回線の所有者とその家族グループ内で光を契約しているか
         $familyList = $this->contractorRepository->getByFamilyGroupId($contractLine['family_group_id']);
         $contractor_ids = array_column($familyList, 'id');
-        Log::info($contractor_ids);
         return $this->contractDeviceRepository->existsFamilyDeviceOnDeviceType(1, $contractor_ids);
     }
 

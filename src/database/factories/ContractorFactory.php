@@ -20,7 +20,7 @@ class ContractorFactory extends Factory
             'uuid' => Str::uuid(),
             'name' => $this->faker->name,
             'zip_code' => $this->faker->postcode,
-            // 'birth_day' => $this->faker->date('Y/m/d', '2030/04/01'),
+            'birth_day' => $this->faker->date('Y/m/d', '2030/04/01'),
             'prefecture' => $this->faker->prefecture,
             'city' => $this->faker->city,
             'street_bunch' => $this->faker->streetAddress,

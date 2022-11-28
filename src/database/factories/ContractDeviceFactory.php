@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\ContractLine;
+use App\Models\Contractor;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -17,6 +18,9 @@ class ContractDeviceFactory extends Factory
     {
         return [
             'uuid' => Str::uuid(),
+            'contractor_id' => function () {
+                return Contractor::factory()->create()->id;
+            },
             'device_name' => 'iphone',
             'contract_line_id' => function () {
                 return ContractLine::factory()->create()->id;

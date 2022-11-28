@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         DB::table('contractors')->truncate();
         DB::table('contract_lines')->truncate();
+        DB::table('family_groups')->truncate();
+        DB::table('contract_devices')->truncate();
         Schema::enableForeignKeyConstraints();
         $this->call([
             ContractorSeeder::class,

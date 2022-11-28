@@ -20,7 +20,7 @@ class CreateMonthlyPaymentHistoriesTable extends Migration
             $table->integer('payment_status')->nullable(false)->default(0)->comment('支払い状況(未納:0,完了:1)');
             $table->year('year')->comment('年度');
             $table->integer('month')->comment('支払い月');
-            $table->integer('payment_amount');
+            $table->integer('payment_amount')->nullable()->comment('支払額');
             $table->timestamps();
             $table->softDeletes();
         });

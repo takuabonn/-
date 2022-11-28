@@ -19,10 +19,10 @@ class CreateMonthlyBillingHistoriesTable extends Migration
             $table->unsignedBigInteger('contract_line_id')->nullable(false)->comment('契約回線ID');
             $table->year('year')->comment('年度');
             $table->integer('month')->comment('請求月');
-            $table->integer('rate_plan_amount')->comment('料金プラン料金');
-            $table->integer('call_charges')->comment('通話料金');
-            $table->integer('additional_data_communication_amount')->comment('追加データ通信量');
-            $table->integer('additional_data_communication_charges')->comment('追加のデータ通信量料金');
+            $table->integer('rate_plan_amount')->nullable()->comment('料金プラン料金');
+            $table->integer('call_charges')->nullable()->comment('通話料金');
+            $table->integer('additional_data_communication_amount')->nullable()->comment('追加データ通信量');
+            $table->integer('additional_data_communication_charges')->nullable()->comment('追加のデータ通信量料金');
             $table->integer('model_division_amount')->comment('端末分割代金');
             $table->timestamps();
             $table->softDeletes();

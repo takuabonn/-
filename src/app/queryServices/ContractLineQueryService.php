@@ -39,7 +39,6 @@ class ContractLineQueryService
         if ($contractLine['family_group_id'] === null) {
             return [];
         }
-        Log::info($this->contractLineRepository->getByFamilyGroupId($contractLine['family_group_id']));
         return $this->contractLineRepository->getByFamilyGroupId($contractLine['family_group_id']);
     }
 
@@ -57,9 +56,8 @@ class ContractLineQueryService
             return $this->contractDeviceRepository->existsDeviceOnDeviceType(1, $contractLine['contractor_id']);
         }
         // 回線の所有者とその家族グループ内で光を契約しているか
-        $familyList = $this->contractorRepository->getByFamilyGroupId($contractLine['family_group_id']);
-        $contractor_ids = array_column($familyList, 'id');
-        Log::info($contractor_ids);
+        $familyList = $this->contractLineRepository->getByFamilyGroupId($contractLine['family_group_id']);
+        $contractor_ids = array_column($familyList, 'contractor_id');
         return $this->contractDeviceRepository->existsFamilyDeviceOnDeviceType(1, $contractor_ids);
     }
 

@@ -20,9 +20,9 @@ class CreateNoContractDetailsTable extends Migration
             $table->integer('how_to_payment')->nullable(false)->comment('支払い方法');
             $table->integer('billing_deadline_type')->nullable(false)->comment('請求締め日種別');
             $table->integer('rate_plan_type')->nullable(false)->comment('料金プラン種別');
-            $table->integer('family_discount_condition')->comment('家族割適用状況');
-            $table->integer('wifi_discount_condition')->comment('光割引適用状況');
-            $table->integer('call_option')->comment('通話オプション');
+            $table->integer('family_discount_condition')->nullable()->comment('家族割適用状況');
+            $table->integer('wifi_discount_condition')->nullable()->comment('光割引適用状況');
+            $table->integer('call_option')->nullable()->comment('通話オプション');
             $table->timestamps();
             $table->softDeletes();
 
